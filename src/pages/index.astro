@@ -27,47 +27,49 @@ const resolvedHeroImage = impostazioniHome?.data.heroImage;
   title="Roverati Giardini | Progettazione e Manutenzione Aree Verdi a Ferrara"
   description="Da oltre 50 anni l'architettura del verde a Ferrara. Potature in tree climbing, irrigazione e progettazione 3D."
 >
-  <section class="hero-section relative min-h-screen flex items-end overflow-hidden bg-green-950">
-    <div class="absolute inset-0">
-      {resolvedHeroImage ? (
-        <Image 
-          src={resolvedHeroImage} 
-          alt="Giardino curato da Roverati Giardini" 
-          class="absolute inset-0 w-full h-full object-cover object-center hero-img" 
-          loading="eager" 
-          widths={[800, 1200, 1920]} 
-          sizes="100vw" 
-        />
-      ) : (
-        <div class="absolute inset-0 bg-green-900 w-full h-full"></div>
-      )}
-      <div class="absolute inset-0 bg-gradient-to-t from-green-950 via-green-950/40 to-green-900/20"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-green-950/70 via-transparent to-transparent"></div>
-    </div>
-
-    <div class="absolute top-32 right-8 md:right-16 z-10 hidden md:block">
-      <div class="hero-badge relative w-28 h-28 flex items-center justify-center">
-        <svg viewBox="0 0 120 120" class="w-full h-full animate-[spin_18s_linear_infinite] absolute inset-0" fill="none">
-          <path id="textCircle" d="M 60,60 m -45,0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0" fill="none"/>
-          <text font-size="11" fill="rgba(255,255,255,0.6)" font-family="DM Sans, sans-serif" font-weight="500" letter-spacing="3.5">
-            <textPath href="#textCircle">DAL 1974 · FERRARA · VERDE ·&nbsp;</textPath>
-          </text>
-        </svg>
-        <svg viewBox="0 0 36 36" width="36" height="36" fill="none" class="relative z-10">
-          <path d="M18 3C18 3 5 10 5 20C5 27.18 10.82 33 18 33C25.18 33 31 27.18 31 20C31 10 18 3 18 3Z" fill="#0C8E36"/>
-          <path d="M18 11 L18 30" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
-          <path d="M18 19 Q14 15 10 17" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
-          <path d="M18 24 Q22 20 26 21" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-    </div>
+  <section class="hero-section relative min-h-[80vh] md:min-h-screen flex items-center overflow-hidden bg-green-950">
+  <div class="absolute inset-0">
+    {resolvedHeroImage ? (
+      <Image 
+        src={resolvedHeroImage} 
+        alt="Team Roverati Giardini"
+        class="absolute inset-0 w-full h-full object-cover object-left md:object-center hero-img" 
+        loading="eager" 
+        widths={[800, 1200, 1920]} 
+        sizes="100vw" 
+      />
+    ) : (
+      <div class="absolute inset-0 bg-green-900 w-full h-full"></div>
+    )}
+    
+    <div class="absolute inset-0 bg-gradient-to-t from-green-950/90 via-green-950/20 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-green-950/50 to-transparent md:hidden"></div>
+  </div>
 
     <div class="relative w-full max-w-7xl mx-auto px-6 pb-20 md:pb-28 z-10">
-      <div class="hero-eyebrow inline-flex items-center gap-2.5 mb-8 px-4 py-2 bg-white/8 border border-white/15 backdrop-blur-md text-white/80 text-[10px] font-bold tracking-[0.28em] uppercase rounded-full">
+
+      <div class="mb-10 hidden md:block">
+        <div class="hero-badge relative w-28 h-28 flex items-center justify-center">
+          <svg viewBox="0 0 120 120" class="w-full h-full animate-[spin_18s_linear_infinite] absolute inset-0" fill="none">
+            <path id="textCircle" d="M 60,60 m -45,0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0" fill="none"/>
+            <text font-size="11" fill="rgba(255,255,255,0.6)" font-family="DM Sans, sans-serif" font-weight="500" letter-spacing="3.5">
+              <textPath href="#textCircle">DAL 1974 · FERRARA · VERDE ·&nbsp;</textPath>
+            </text>
+          </svg>
+          <svg viewBox="0 0 36 36" width="36" height="36" fill="none" class="relative z-10">
+            <path d="M18 3C18 3 5 10 5 20C5 27.18 10.82 33 18 33C25.18 33 31 27.18 31 20C31 10 18 3 18 3Z" fill="#0C8E36"/>
+            <path d="M18 11 L18 30" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M18 19 Q14 15 10 17" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M18 24 Q22 20 26 21" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="hero-eyebrow inline-flex items-center gap-2.5 mb-6 px-4 py-2 bg-white/8 border border-white/15 backdrop-blur-md text-white/80 text-[10px] font-bold tracking-[0.28em] uppercase rounded-full">
         <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse flex-shrink-0"></span>
         Ferrara e Provincia — Dal 1974
       </div>
-      <h1 class="hero-headline font-display text-[clamp(3.5rem,10vw,8.5rem)] text-white leading-[0.88] tracking-[-0.02em] mb-10">
+      <h1 class="hero-headline font-display text-[clamp(2.5rem,10vw,8.5rem)] text-white leading-[0.9] tracking-[-0.02em] mb-10">
         <span class="block hero-line-1">Il tuo giardino,</span>
         <span class="block hero-line-2">
           <em class="text-green-400 not-italic">la nostra</em>
@@ -93,7 +95,7 @@ const resolvedHeroImage = impostazioniHome?.data.heroImage;
             </a>
           </div>
         </div>
-        <div class="flex gap-8 md:gap-12">
+      <div class="flex gap-6 md:gap-12 border-t border-white/10 pt-8 md:border-0 md:pt-0">
           {[
             { value: '50+', label: 'Anni' },
             { value: '1.200+', label: 'Progetti' },
