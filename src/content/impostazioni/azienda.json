@@ -6,5 +6,18 @@
   "fotoStoricaMedia2": "../../assets/images/azienda/fotoStoricaMedia2.jpg",
   "timeline": [],
   "valori": [],
-  "teamMembers": []
+  "teamMembers": [
+    {
+      "nome": "Luca Roverati",
+      "ruolo": "Fondatore & Responsabile Tecnico",
+      "bio": "Una vita dedicata alle piante. Ha vissuto la transizione dal frutteto originale alla cura del verde ornamentale, trasmettendo la sua esperienza a tutta la squadra.",
+      "specialita": [
+        "Consulenza botanica",
+        "Abbattimenti",
+        "Direzione tecnica"
+      ],
+      "foto": "../../assets/images/azienda/team/teamMembers/0/foto.jpg"
+    }
+  ],
+  "fotoSquadra": "../../assets/images/azienda/fotoSquadra.jpg"
 }
