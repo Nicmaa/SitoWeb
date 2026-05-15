@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import isoLogo from '../assets/iso-9001-logo.png';
+import mappaSede from '../assets/mappa-sede.png';
 import { getEntry } from 'astro:content';
 
 const contatti = await getEntry('impostazioni', 'contatti');
@@ -16,7 +17,6 @@ const email     = c?.email           ?? 'info@roveratigiardini.com';
 const via       = c?.indirizzoVia    ?? "Stradello Ca' Nova 91";
 const citta     = c?.indirizzoCitta  ?? '44020 Dogato (FE)';
 const mapsUrl   = c?.googleMapsUrl   ?? 'https://maps.google.com/?q=Stradello+Ca+Nova+91+Dogato+Ferrara';
-const mapsEmbed = c?.googleMapsEmbed ?? '';
 
 const orari = c?.orari?.length ? c.orari : [
   { giorno: 'Lunedì – Venerdì', orario: '8:00 – 18:00', aperto: true },
@@ -416,39 +416,53 @@ const tel1Href = 'tel:' + tel1.replace(/\s/g, '');
 
 
   <!-- ═══════════════════════════════════════════
-       MAPPA (embed dinamico da Keystatic)
+       MAPPA
   ═══════════════════════════════════════════ -->
   <section class="px-6 pb-24 bg-cloud">
     <div class="max-w-7xl mx-auto reveal">
-      <div class="rounded-3xl overflow-hidden border border-green-100 shadow-lg" style="height: 360px;">
-        {mapsEmbed ? (
-          <iframe
-            src={mapsEmbed}
-            width="100%"
-            height="100%"
-            style="border:0; filter: saturate(0.7) hue-rotate(80deg);"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title={`Posizione Roverati Giardini — ${via}, ${citta}`}
-          ></iframe>
-        ) : (
-          <!-- Placeholder se l'embed non è ancora configurato in Keystatic -->
-          <div class="w-full h-full bg-green-950 flex flex-col items-center justify-center gap-3 text-center px-6">
-            <svg class="w-10 h-10 text-green-600" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-            </svg>
-            <p class="text-green-400 text-sm font-medium">{via}, {citta}</p>
-            <p class="text-green-600 text-xs">Aggiungi l'URL embed di Google Maps in Keystatic → Impostazioni Contatti</p>
+      
+      <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="block group relative rounded-3xl overflow-hidden border border-green-100 shadow-lg cursor-pointer" style="height: 360px;" aria-label="Apri posizione su Google Maps">
+        
+        <Image 
+          src={mappaSede} 
+          alt={`Mappa per raggiungere la sede in ${via}, ${citta}`}
+          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+
+        <div class="absolute inset-0 bg-green-950/0 group-hover:bg-green-950/30 transition-colors duration-300 z-10 flex items-center justify-center">
+          <div class="bg-white text-green-900 px-6 py-3 rounded-full font-semibold text-sm shadow-xl flex items-center gap-3 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+              <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            Apri in Google Maps
           </div>
-        )}
-      </div>
-      <p class="text-center text-xs text-green-600/50 mt-3">
-        {via}, {citta} —
-        <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="text-green-500 hover:text-green-600 underline underline-offset-2">
-          Apri in Google Maps ↗
-        </a>
+        </div>
+
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[100%] z-20 flex flex-col items-center">
+          <div class="bg-white px-3 py-1 rounded-md shadow-md mb-2 text-[10px] font-bold tracking-wider text-green-900 uppercase border border-green-100">
+            Sede Ufficio
+          </div>
+          
+          <div class="relative group-hover:-translate-y-2 transition-transform duration-300">
+            <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-1.5 bg-black/30 rounded-[100%] blur-[2px]"></div>
+            
+            <svg class="relative w-10 h-10 drop-shadow-md" viewBox="0 0 36 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 0C8.05887 0 0 8.05887 0 18C0 31.5 18 45 18 45C18 45 36 31.5 36 18C36 8.05887 27.9411 0 18 0Z" fill="#0C8E36" stroke="white" stroke-width="2.5"/>
+              <circle cx="18" cy="18" r="6" fill="white"/>
+            </svg>
+            
+            <div class="absolute top-1 left-1 w-8 h-8 rounded-full border-2 border-green-400 animate-ping opacity-75"></div>
+          </div>
+        </div>
+
+      </a>
+
+      <p class="text-center text-xs text-green-600/50 mt-4">
+        {via}, {citta} — Clicca sulla mappa per aprire le indicazioni stradali.
       </p>
+
     </div>
   </section>
 
