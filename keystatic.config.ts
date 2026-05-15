@@ -74,11 +74,6 @@ export default config({
           label: 'URL Google Maps (link diretto)',
           description: "Link \"Apri in Maps\" — dall'app Google Maps → Condividi",
         }),
-        googleMapsEmbed: fields.text({
-          label: 'URL embed Google Maps (iframe src)',
-          description: 'Google Maps → Condividi → Incorpora mappa → copia solo il src',
-          multiline: false,
-        }),
         orari: fields.array(
           fields.object({
             giorno:  fields.text({ label: 'Giorno / Fascia', description: 'Es. Lunedì – Venerdì' }),

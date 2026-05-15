@@ -65,7 +65,6 @@ const impostazioni = defineCollection({
     indirizzoVia:          z.string().optional(),
     indirizzoCitta:        z.string().optional(),
     googleMapsUrl:         z.string().nullable().optional(),
-    googleMapsEmbed:       z.string().optional(),
     orari: z.array(z.object({
       giorno: z.string(),
       orario: z.string(),
