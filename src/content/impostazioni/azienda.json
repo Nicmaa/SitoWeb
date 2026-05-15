@@ -1,0 +1,44 @@
+{
+  "storiaIntro": [],
+  "fotoStoricaGrande": "../../assets/images/azienda/fotoStoricaGrande.jpg",
+  "fotoStoricaGrandeCaption": "Dogato, anni '70",
+  "fotoStoricaMedia1": "../../assets/images/azienda/fotoStoricaMedia1.jpg",
+  "fotoStoricaMedia2": "../../assets/images/azienda/fotoStoricaMedia2.jpg",
+  "timeline": [],
+  "valori": [],
+  "teamMembers": [
+    {
+      "nome": "Luca Roverati",
+      "ruolo": "Fondatore & Responsabile Tecnico",
+      "bio": "Una vita dedicata alle piante. Ha vissuto la transizione dal frutteto originale alla cura del verde ornamentale, trasmettendo la sua esperienza a tutta la squadra.",
+      "specialita": [
+        "Consulenza botanica",
+        "Abbattimenti",
+        "Direzione tecnica"
+      ],
+      "foto": "../../assets/images/azienda/team/teamMembers/0/foto.jpg"
+    },
+    {
+      "nome": "Nicola Roverati",
+      "ruolo": "Direttore Operativo",
+      "bio": "Seconda generazione. Ha portato in azienda la progettazione 3D e la certificazione ISO, modernizzando i processi senza perdere l'anima artigianale.",
+      "specialita": [
+        "Gestione cantieri",
+        "ISO 9001"
+      ],
+      "foto": "../../assets/images/azienda/team/teamMembers/1/foto.jpg"
+    },
+    {
+      "nome": "Ilaria Boldrini",
+      "ruolo": "Responsabile Clienti & Amm.",
+      "bio": "Il volto dell'azienda verso i clienti. Coordina preventivi, follow-up e la soddisfazione post-lavoro, garantendo che ogni progetto superi le aspettative.",
+      "specialita": [
+        "Coordinamento",
+        "Preventivi",
+        "Relazioni clienti"
+      ],
+      "foto": "../../assets/images/azienda/team/teamMembers/2/foto.jpg"
+    }
+  ],
+  "fotoSquadra": "../../assets/images/azienda/fotoSquadra.jpg"
+}
