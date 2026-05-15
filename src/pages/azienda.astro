@@ -8,34 +8,33 @@ const d = azienda?.data as any;
 
 // ── Fallback dati ─────────────────────────────────────────────────────────
 const storiaIntro = d?.storiaIntro?.length ? d.storiaIntro : [
-  "Roverati Giardini nasce nel 1974 dalla passione di Marco Roverati per gli alberi e il verde. Quello che era un piccolo furgone con due attrezzi è diventato, nel corso di mezzo secolo, una delle realtà di riferimento per l'architettura del verde a Ferrara e provincia.",
-  "Tre generazioni si sono avvicendate portando ciascuna il proprio contributo: la competenza tecnica sul campo del fondatore, la visione progettuale e gestionale della seconda generazione, l'attenzione alla relazione con i clienti della terza.",
-  "Ogni giardino che curiamo porta il segno di questa storia. Non siamo una multinazionale del verde: siamo artigiani che amano il proprio lavoro, e si vede.",
+  "Le radici di Roverati Giardini affondano nel 1964, quando la famiglia avvia l'attività con un frutteto dedicato alla coltivazione diretta. Un legame crudo e autentico con la terra.",
+  "Nel 1996 avviene la svolta decisiva: l'azienda ottiene la qualifica ufficiale per il giardinaggio professionale. L'esperienza decennale maturata in ambito agricolo si trasforma in architettura e cura del verde ornamentale.",
+  "Tre generazioni si sono avvicendate, portando ciascuna il proprio contributo. Non siamo una multinazionale del verde: siamo artigiani cresciuti lavorando la terra, e in ogni giardino che curiamo si vede."
 ];
 
 const timeline = d?.timeline?.length ? d.timeline : [
-  { anno: '1974', titolo: 'La fondazione',          testo: "Tutto inizia con un furgone, una motosega e la passione di un uomo per gli alberi. Roverati Giardini nasce a Ferrara come piccola impresa familiare di giardinaggio.", accento: true },
-  { anno: '1983', titolo: 'I primi grandi appalti',  testo: "L'azienda si aggiudica i primi contratti con enti pubblici, tra cui la gestione del verde dell'Ospedale di Cona e di alcuni parchi comunali ferraresi.", accento: false },
-  { anno: '1995', titolo: 'Nasce il tree climbing',  testo: "Investiamo nelle prime attrezzature e formazioni per le potature in arrampicata. Diventiamo uno dei primi operatori in regione a offrire interventi ad alta quota certificati.", accento: false },
-  { anno: '2004', titolo: "L'Abbazia di Pomposa",   testo: "Inizia la collaborazione pluriennale per la cura del verde storico dell'Abbazia di Pomposa, uno dei progetti più importanti e delicati della nostra storia.", accento: false },
-  { anno: '2010', titolo: 'Certificazione ISO 9001', testo: "Otteniamo la certificazione ISO 9001:2015, formalizzando i processi e il controllo qualità su ogni intervento. Un impegno verso i clienti che manteniamo ancora oggi.", accento: false },
-  { anno: '2018', titolo: 'Progettazione 3D',        testo: "Integriamo il servizio di progettazione digitale con render fotorealistici: i clienti vedono il loro giardino finito prima ancora che inizino i lavori.", accento: false },
-  { anno: 'Oggi', titolo: 'Oltre 1.200 progetti',   testo: "Tre generazioni, una squadra di professionisti, 50 anni di verde. Continuiamo a crescere rimanendo fedeli ai valori di cura, rispetto per la natura e qualità artigianale.", accento: true },
+  { anno: '1964', titolo: 'Le origini: il frutteto',    testo: "L'azienda muove i primi passi. Viene avviata l'attività agricola basata sulla coltivazione diretta di un frutteto, ponendo le basi della nostra conoscenza botanica.", accento: true },
+  { anno: '1996', titolo: 'Il giardinaggio professionale', testo: "Otteniamo ufficialmente la qualifica per il giardinaggio. La nostra vocazione agricola si evolve per abbracciare la progettazione e la manutenzione del verde a 360 gradi.", accento: true },
+  { anno: '2004', titolo: "L'Abbazia di Pomposa",       testo: "Inizia la collaborazione pluriennale per la cura del verde storico dell'Abbazia di Pomposa, uno dei progetti più delicati e prestigiosi della nostra storia.", accento: false },
+  { anno: '2010', titolo: 'Certificazione ISO 9001',   testo: "Otteniamo la certificazione ISO 9001:2015, formalizzando i processi e il controllo qualità su ogni intervento. Un impegno verso i clienti che manteniamo ancora oggi.", accento: false },
+  { anno: '2018', titolo: 'Progettazione 3D',          testo: "Integriamo il servizio di progettazione digitale con render fotorealistici: i clienti vedono il loro giardino finito prima ancora che inizino i lavori.", accento: false },
+  { anno: 'Oggi', titolo: 'Oltre 1.200 progetti',       testo: "Tre generazioni, una squadra di professionisti e oltre 60 anni di storia legata alla terra. Continuiamo a crescere rimanendo fedeli ai nostri valori.", accento: true },
 ];
 
 const valori = d?.valori?.length ? d.valori : [
   { icona: 'nature',  titolo: 'Rispetto per la natura',   descrizione: "Ogni intervento è pensato per valorizzare e proteggere l'ecosistema. Usiamo prodotti a basso impatto e privilegiamo specie autoctone." },
   { icona: 'quality', titolo: 'Qualità certificata',      descrizione: "ISO 9001:2015 non è solo un timbro: è il risultato di processi rigidi, formazione continua e un controllo sistematico su ogni lavoro eseguito." },
-  { icona: 'team',    titolo: 'Squadra di famiglia',      descrizione: "Tre generazioni e un team affiatato. La nostra forza è nelle persone: operatori specializzati, formati continuamente, che trattano ogni giardino come fosse il proprio." },
-  { icona: 'listen',  titolo: 'Ascolto prima di tutto',   descrizione: "Ogni progetto inizia da un sopralluogo gratuito e da una conversazione. Capiamo le tue esigenze, il tuo gusto e il tuo budget prima di proporre qualsiasi soluzione." },
+  { icona: 'team',    titolo: 'Squadra di famiglia',      descrizione: "Tre generazioni e un team affiatato. La nostra forza è nelle persone: operatori specializzati che trattano ogni giardino come fosse il proprio." },
+  { icona: 'listen',  titolo: 'Ascolto prima di tutto',   descrizione: "Ogni progetto inizia da un sopralluogo gratuito. Capiamo le tue esigenze, il tuo gusto e il tuo budget prima di proporre qualsiasi soluzione." },
 ];
 
 const teamIntroTesto = d?.teamIntroTesto ?? 'Tre titolari, una famiglia, e una squadra di professionisti che condividono la stessa visione.';
 
 const teamMembers = d?.teamMembers?.length ? d.teamMembers : [
-  { nome: 'Marco Roverati', ruolo: 'Fondatore & Responsabile Tecnico', bio: "50 anni di esperienza sul campo. Ha fondato l'azienda nel 1974 con la passione per gli alberi che ancora oggi trasmette a tutta la squadra.", specialita: ['Tree Climbing', 'Abbattimenti', 'Consulenza tecnica'], foto: null },
+  { nome: 'Marco Roverati', ruolo: 'Fondatore & Responsabile Tecnico', bio: "Una vita dedicata alle piante. Ha vissuto la transizione dal frutteto originale alla cura del verde ornamentale, trasmettendo la sua esperienza a tutta la squadra.", specialita: ['Consulenza botanica', 'Abbattimenti', 'Direzione tecnica'], foto: null },
   { nome: 'Luca Roverati',  ruolo: 'Direttore Operativo',              bio: "Seconda generazione. Ha portato in azienda la progettazione 3D e la certificazione ISO, modernizzando i processi senza perdere l'anima artigianale.", specialita: ['Progettazione 3D', 'Gestione cantieri', 'ISO 9001'], foto: null },
-  { nome: 'Sara Roverati',  ruolo: 'Responsabile Clienti & Amministrazione', bio: "Il volto dell'azienda verso i clienti. Coordina preventivi, follow-up e la soddisfazione post-lavoro, garantendo che ogni progetto superi le aspettative.", specialita: ['Coordinamento', 'Preventivi', 'Relazioni clienti'], foto: null },
+  { nome: 'Sara Roverati',  ruolo: 'Responsabile Clienti & Amm.',      bio: "Il volto dell'azienda verso i clienti. Coordina preventivi, follow-up e la soddisfazione post-lavoro, garantendo che ogni progetto superi le aspettative.", specialita: ['Coordinamento', 'Preventivi', 'Relazioni clienti'], foto: null },
 ];
 
 // — Foto storiche — risoluzione dinamica tramite import.meta.glob
@@ -57,7 +56,7 @@ const iconeValori: Record<string, string> = {
 
 <Layout
   title="La Nostra Azienda | Roverati Giardini"
-  description="50 anni di storia, passione per il verde e una squadra di professionisti a Ferrara. Scopri chi siamo e cosa ci ha resi leader nel settore."
+  description="Dal 1964 legati alla terra, passione per il verde e una squadra di professionisti a Ferrara. Scopri chi siamo."
 >
 
   <!-- ═══════════════════ HERO ═══════════════════ -->
@@ -74,17 +73,17 @@ const iconeValori: Record<string, string> = {
             <span class="text-[10px] font-bold tracking-[0.28em] uppercase text-green-400">Chi Siamo</span>
           </div>
           <h1 class="font-display text-6xl md:text-8xl text-white leading-[0.88] mb-8">
-            Cinquant'anni<br/>
-            <em class="text-green-400 font-light">di verde</em><br/>
-            e radici.
+            Sessant'anni<br/>
+            <em class="text-green-400 font-light">di radici</em><br/>
+            e verde.
           </h1>
           <p class="text-white/50 text-lg font-light leading-relaxed max-w-md">
-            Dal 1974 trasformiamo spazi verdi in storie. Un'azienda di famiglia che ha fatto del rispetto per la natura la propria ragione d'essere.
+            Dal 1964 indissolubilmente legati alla terra. Dal 1996 trasformiamo spazi verdi in storie. Un'azienda agricola diventata punto di riferimento per l'architettura del verde.
           </p>
         </div>
         <div class="hidden lg:flex items-end justify-end pb-12">
           <div class="text-right select-none" aria-hidden="true">
-            <div class="font-display text-[160px] text-white/[0.06] leading-none tracking-tighter">50</div>
+            <div class="font-display text-[160px] text-white/[0.06] leading-none tracking-tighter">60+</div>
             <div class="text-white/20 text-sm tracking-[0.3em] uppercase -mt-6">anni di esperienza</div>
           </div>
         </div>
@@ -93,9 +92,9 @@ const iconeValori: Record<string, string> = {
       <!-- Stats strip -->
       <div class="grid grid-cols-2 md:grid-cols-4 border-t border-white/8">
         {[
-          { v: '1974',     l: 'Anno di fondazione' },
-          { v: '1.200+',   l: 'Progetti completati' },
-          { v: '98%',      l: 'Clienti soddisfatti' },
+          { v: '1964',   l: 'Anno di fondazione' },
+          { v: '1.200+', l: 'Progetti completati' },
+          { v: '98%',    l: 'Clienti soddisfatti' },
           { v: 'ISO 9001', l: 'Qualità certificata' },
         ].map((s, i) => (
           <div class={`py-8 text-center ${i < 3 ? 'border-r border-white/8' : ''}`}>
@@ -148,11 +147,11 @@ const iconeValori: Record<string, string> = {
                 <div class="absolute bottom-0 left-0 right-0 p-6">
                   <div class="text-[10px] font-bold tracking-[0.2em] uppercase text-green-300 mb-1">Archivio storico</div>
                   <div class="text-white/70 text-sm font-light">
-                    {d?.fotoStoricaGrandeCaption ?? "Ferrara, anni '80"}
+                    {d?.fotoStoricaGrandeCaption ?? "Ferrara, le origini"}
                   </div>
                 </div>
                 <div class="absolute top-4 left-4 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full tracking-wide">
-                  1974 →
+                  1964 →
                 </div>
               </div>
             </div>
@@ -186,7 +185,7 @@ const iconeValori: Record<string, string> = {
                 )}
                 <div class="absolute inset-0 bg-gradient-to-t from-green-950/60 to-transparent"></div>
                 <div class="absolute bottom-3 left-3 right-3 text-white/70 text-xs font-light">
-                  {d?.fotoStoricaMedia2Caption ?? "Tree climbing, anni '95"}
+                  {d?.fotoStoricaMedia2Caption ?? "Transizione, 1996"}
                 </div>
               </div>
             </div>
@@ -210,7 +209,7 @@ const iconeValori: Record<string, string> = {
       <div class="reveal text-center mb-16">
         <div class="flex items-center justify-center gap-3 mb-5">
           <span class="w-8 h-px bg-green-500"></span>
-          <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-green-500">Mezzo secolo</span>
+          <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-green-500">Oltre mezzo secolo</span>
           <span class="w-8 h-px bg-green-500"></span>
         </div>
         <h2 class="font-display text-4xl md:text-5xl text-white leading-tight">
@@ -414,8 +413,8 @@ const iconeValori: Record<string, string> = {
     </div>
     <div class="reveal relative max-w-2xl mx-auto text-center">
       <h2 class="font-display text-5xl md:text-6xl text-green-900 mb-6 leading-[0.92]">
-        Affidati a chi il verde<br/>
-        <em class="text-green-500 font-light">lo vive da 50 anni.</em>
+        Affidati a chi la terra<br/>
+        <em class="text-green-500 font-light">la lavora dal 1964.</em>
       </h2>
       <p class="text-green-700/55 mb-10 font-light leading-relaxed">
         Sopralluogo gratuito, preventivo in 48 ore. Vieni a trovarci o contattaci per il tuo progetto.
