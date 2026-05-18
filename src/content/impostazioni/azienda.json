@@ -1,9 +1,9 @@
 {
   "storiaIntro": [],
-  "fotoStoricaGrande": "../../assets/images/azienda/fotoStoricaGrande.jpg",
+  "fotoStoricaGrande": "../../assets/images/azienda/fotoStoricaGrande.webp",
   "fotoStoricaGrandeCaption": "Dogato, anni '70",
-  "fotoStoricaMedia1": "../../assets/images/azienda/fotoStoricaMedia1.jpg",
-  "fotoStoricaMedia2": "../../assets/images/azienda/fotoStoricaMedia2.jpg",
+  "fotoStoricaMedia1": "../../assets/images/azienda/fotoStoricaMedia1.webp",
+  "fotoStoricaMedia2": "../../assets/images/azienda/fotoStoricaMedia2.webp",
   "timeline": [],
   "valori": [],
   "teamMembers": [
@@ -16,7 +16,7 @@
         "Abbattimenti",
         "Direzione tecnica"
       ],
-      "foto": "../../assets/images/azienda/team/teamMembers/0/foto.jpg"
+      "foto": "../../assets/images/azienda/team/teamMembers/0/foto.webp"
     },
     {
       "nome": "Nicola Roverati",
@@ -26,7 +26,7 @@
         "Gestione cantieri",
         "ISO 9001"
       ],
-      "foto": "../../assets/images/azienda/team/teamMembers/1/foto.jpg"
+      "foto": "../../assets/images/azienda/team/teamMembers/1/foto.webp"
     },
     {
       "nome": "Ilaria Boldrini",
@@ -37,8 +37,8 @@
         "Preventivi",
         "Relazioni clienti"
       ],
-      "foto": "../../assets/images/azienda/team/teamMembers/2/foto.jpg"
+      "foto": "../../assets/images/azienda/team/teamMembers/2/foto.webp"
     }
   ],
-  "fotoSquadra": "../../assets/images/azienda/fotoSquadra.jpg"
+  "fotoSquadra": "../../assets/images/azienda/fotoSquadra.webp"
 }
