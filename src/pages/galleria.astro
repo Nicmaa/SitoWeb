@@ -314,18 +314,20 @@ const aspectClass: Record<string, string> = {
           /* Items reali da Keystatic */
           elementiResolved.map((item, idx) => (
             <div
-              class={`gallery-item group relative overflow-hidden rounded-2xl cursor-pointer bg-green-900/40 border border-green-800/50 ${aspectClass[item.data.aspetto] ?? ''}`}
+              class={`gallery-item group relative overflow-hidden rounded-2xl cursor-pointer bg-green-900/40 border border-green-800/50 ${aspectClass[item.data.aspetto] ?? ''} ${idx >= 12 ? 'hidden' : ''}`}
               data-cat={item.data.categoria}
               data-idx={idx}
               data-label={item.data.label ?? item.data.label}
-              style={`animation-delay: ${idx * 40}ms`}
+              style={`animation-delay: ${(idx % 12) * 40}ms`}
             >
               {item.img ? (
                 <Image
                   src={item.img}
                   alt={String(item.data.label ?? item.data.label)}
+                  width={800} 
                   class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
+                  loading={idx < 4 ? "eager" : "lazy"}
+                  decoding="async"
                 />
               ) : (
                 <div class={`absolute inset-0 gallery-placeholder-${(idx % 6) + 1}`}></div>
@@ -447,7 +449,6 @@ const aspectClass: Record<string, string> = {
     from { opacity: 0; transform: scale(0.95); }
     to   { opacity: 1; transform: scale(1); }
   }
-  .gallery-item.filtered-out { display: none; }
 
   /* Lightbox */
   #lightbox.open {
@@ -465,13 +466,50 @@ const aspectClass: Record<string, string> = {
 </style>
 
 <script>
-  // ── Filter ────────────────────────────────────────────────────────────────
-  const filterBtns    = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
-  const galleryItems  = document.querySelectorAll<HTMLElement>('.gallery-item');
+  // ── Paginazione e Filtri ──────────────────────────────────────────────────
+  const filterBtns   = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const galleryItems = document.querySelectorAll<HTMLElement>('.gallery-item');
+  const loadMoreBtn  = document.getElementById('load-more-btn');
+
+  const ITEMS_PER_PAGE = 24;
+  let currentPage = 1;
+  let currentFilter = 'Tutti';
+
+  function renderGrid() {
+    let visibleInFilter = 0;
+    let totalShown = 0;
+    const maxToShow = currentPage * ITEMS_PER_PAGE;
+
+    galleryItems.forEach((item) => {
+      const match = currentFilter === 'Tutti' || item.dataset.cat === currentFilter;
+
+      if (match) {
+        visibleInFilter++;
+        if (totalShown < maxToShow) {
+          item.classList.remove('hidden');
+          item.style.animationDelay = `${(totalShown % ITEMS_PER_PAGE) * 40}ms`;
+          totalShown++;
+        } else {
+          item.classList.add('hidden');
+        }
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+
+    if (loadMoreBtn && loadMoreBtn.parentElement) {
+      if (visibleInFilter > maxToShow) {
+        loadMoreBtn.parentElement.style.display = 'block';
+      } else {
+        loadMoreBtn.parentElement.style.display = 'none';
+      }
+    }
+  }
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter!;
+      currentFilter = btn.dataset.filter!;
+      currentPage = 1; 
 
       filterBtns.forEach(b => {
         b.classList.remove('bg-green-500', 'text-white', 'border-green-500');
@@ -482,13 +520,18 @@ const aspectClass: Record<string, string> = {
       btn.classList.remove('bg-white/5', 'text-white/60', 'border-white/10');
       btn.setAttribute('aria-pressed', 'true');
 
-      galleryItems.forEach(item => {
-        const match = filter === 'Tutti' || item.dataset.cat === filter;
-        item.classList.toggle('filtered-out', !match);
-      });
+      renderGrid();
     });
   });
 
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', () => {
+      currentPage++;
+      renderGrid();
+    });
+  }
+
+  renderGrid();
   // ── Lightbox ─────────────────────────────────────────────────────────────
   const lightbox  = document.getElementById('lightbox')!;
   const lbImgWrap = document.getElementById('lb-img-wrap')!;
@@ -502,9 +545,13 @@ const aspectClass: Record<string, string> = {
   let currentIdx = 0;
 
   const openLightbox = (idx: number) => {
-    visibleItems = Array.from(galleryItems).filter(i => !i.classList.contains('filtered-out'));
-    currentIdx = visibleItems.indexOf(galleryItems[idx] as HTMLElement);
+    visibleItems = Array.from(galleryItems).filter(i => 
+      currentFilter === 'Tutti' || i.dataset.cat === currentFilter
+    );
+    
+    currentIdx = visibleItems.indexOf(galleryItems[idx]);
     if (currentIdx === -1) currentIdx = 0;
+    
     updateLightbox();
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -520,11 +567,9 @@ const aspectClass: Record<string, string> = {
     const item = visibleItems[currentIdx];
     if (!item) return;
 
-    // Leggo l'immagine reale dall'<img> inside item, se esiste
     const imgEl = item.querySelector<HTMLImageElement>('img');
     const label = item.dataset.label ?? item.querySelector('p')?.textContent ?? '';
 
-    // Rimuovo eventuali immagini precedenti nel lightbox
     lbImgWrap.querySelectorAll('img').forEach(img => img.remove());
 
     if (imgEl?.src) {
