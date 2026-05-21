@@ -1,0 +1,54 @@
+# ==========================================
+# FILE _redirects - ROVERATIGIARDINI.COM
+# ==========================================
+
+/portfolio                                               /galleria 301
+
+/corsi-di-formazione                                     /servizi/formazione-tecnica/ 301
+/potature-e-abbattimento                                 /servizi/potature-abbattimenti-quota/ 301
+
+/allestimento-area-piscina                               410
+/installazione-di-sistemi-di-dissuasione-antipiccione    410
+/manutenzione-e-realizzazione-aree-verdi                 410
+/perizie-di-stabilita-degli-alberi-vta                   410
+/piante-e-vivaio                                         410
+/piscine-fuori-terra-seminterrate-interrate              410
+/progettazione-3d-fotografica                            410
+/realizzazione-piscine                                   410
+
+# --- ARTICOLI DEL BLOG ---
+/come-costruire-la-piscina-adatta-al-proprio-giardino    410
+/come-creare-un-giardino-verticale                       410
+/come-creare-un-orto-sul-balcone                         410
+/come-effettuare-potatura-piante-perfetta                410
+/come-preparare-il-tuo-giardino-per-linverno             410
+/come-prevenire-erbacce                                  410
+/come-risolvere-i-problemi-di-crescita-delle-piante      410
+/creare-giardino-perfetto                                410
+/giardino-curato-durante-autunno-inverno                 410
+/giardino-e-insetti                                      410
+/giardino-trascurato                                     410
+/idee-design-consigli-piscina-perfetta                   410
+/ingiallimento-erba-cura-e-prevenzione                   410
+/migliori-tipi-di-piante                                 410
+/piante-che-purificano-aria                              410
+/prevenire-lerosione-del-terreno-nel-giardino            410
+/proteggere-le-piante-freddo-parassiti-malattie          410
+/scegliere-complementi-arredo-giardino                   410
+
+# --- ARCHIVI BLOG (CATEGORIE) ---
+/blog                                                    410
+/category                                                410
+/blog/giardinaggio                                       410
+/blog/manutenzione                                       410
+/blog/piscine                                            410
+/category/giardinaggio                                   410
+/category/manutenzione                                   410
+/category/piscine                                        410
+
+# --- RIMOZIONE DEFINITIVA VECCHIA STRUTTURA WP ---
+/bwg_tag/* 410
+/ngg_tag/* 410
+/bwg_gallery/* 410
+/category/* 410
+/portfolio/gallery                                       410
