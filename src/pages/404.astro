@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="404 - Pagina sradicata | Roverati Giardini" 
+  description="La pagina che cerchi non esiste più. Torna alla home."
+>
+  <section 
+    id="garden-404" 
+    class="relative min-h-screen flex items-center justify-center bg-cloud overflow-hidden px-6 cursor-crosshair select-none"
+  >
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+      <svg viewBox="0 0 800 800" class="absolute w-[80vw] max-w-3xl opacity-[0.03]" fill="none">
+        <path d="M400 50C400 50 60 200 60 430C60 620 215 760 400 760C585 760 740 620 740 430C740 200 400 50 400 50Z" fill="#0C8E36"/>
+      </svg>
+    </div>
+
+    <div class="relative z-10 max-w-2xl mx-auto text-center reveal">
+      
+      <div class="inline-flex items-center gap-2.5 mb-8 px-5 py-2.5 rounded-full border border-green-200 bg-white/50 backdrop-blur-sm">
+        <span class="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+        <span class="text-[10px] font-bold tracking-[0.28em] uppercase text-green-700">Errore 404</span>
+      </div>
+
+      <h1 class="font-display text-[8rem] md:text-[12rem] text-green-900/10 leading-[0.8] mb-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[-1]">
+        404
+      </h1>
+
+      <h2 class="font-display text-5xl md:text-7xl text-green-900 mb-6 leading-tight">
+        Pagina <em class="text-green-500 font-light">sradicata.</em>
+      </h2>
+
+      <p class="text-lg text-green-700/70 mb-10 max-w-lg mx-auto leading-relaxed font-light">
+        Il sentiero che stavi seguendo si è interrotto. Il link potrebbe essere stato potato, o forse un imprevisto tecnico lo ha reso momentaneamente non disponibile.
+    </p>
+
+      <div class="flex flex-col items-center gap-6">
+        <a href="/" class="group inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white px-10 py-5 rounded-full font-semibold text-sm tracking-wide uppercase transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/40 hover:-translate-y-1">
+          Torna alla home page
+          <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors" aria-hidden="true">
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+          </span>
+        </a>
+
+        <p class="text-[10px] font-bold tracking-[0.2em] uppercase text-green-500/50 animate-bounce mt-8 pointer-events-none">
+          ↓ Clicca ovunque per piantare un fiore ↓
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Animazione per i fiori piantati dinamicamente */
+  :global(.flower-sprout) {
+    position: absolute;
+    transform-origin: bottom center;
+    animation: sprout 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    pointer-events: none;
+    z-index: 5;
+  }
+  
+  @keyframes sprout {
+    0% { transform: translate(-50%, -100%) scale(0); opacity: 0; }
+    100% { transform: translate(-50%, -100%) scale(1); opacity: 1; }
+  }
+
+  :global(.flower-sprout.wither) {
+    animation: wither 0.4s ease-in forwards;
+  }
+
+  @keyframes wither {
+    0% { transform: translate(-50%, -100%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -100%) scale(0.5); opacity: 0; }
+  }
+</style>
+
+<script>
+  function initInteractiveGarden() {
+    const garden = document.getElementById('garden-404');
+    if (!garden) return;
+
+    // Array di SVG a tema botanico (fiori, germogli)
+    const svgs = [
+      // Sprout
+      `<svg class="w-8 h-8 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12M12 12C8 12 5 9 5 5c0 0 7 0 7 7zm0 0c4 0 7-3 7-7 0 0-7 0-7 7z"/></svg>`,
+      // Simple flower
+      `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22v-7m0 0c-2.5 0-4-2-4-4.5S12 2 12 2s4 6 4 8.5-1.5 4.5-4 4.5zM12 15c-1.5 0-2.5 1-2.5 2.5S12 20 12 20s2.5-1 2.5-2.5S13.5 15 12 15z"/></svg>`,
+      // Leafy plant
+      `<svg class="w-9 h-9 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22v-9M12 13c-2.5 0-5-2.5-5-6 0 0 5 0 5 6zm0 0c2.5 0 5-2.5 5-6 0 0-5 0-5 6zm-2-3.5c-2 0-3.5-1.5-3.5-3.5 0 0 3.5 0 3.5 3.5zm4 0c2 0 3.5-1.5 3.5-3.5 0 0-3.5 0-3.5 3.5z"/></svg>`
+    ];
+
+    garden.addEventListener('click', (e) => {
+      // Ignora i click sul bottone per non sovrascrivere la navigazione
+      if ((e.target as HTMLElement).closest('a')) return;
+
+      const flower = document.createElement('div');
+      flower.className = 'flower-sprout drop-shadow-md';
+      
+      // Coordinate assolute rispetto al parent relative
+      const rect = garden.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      flower.style.left = `${x}px`;
+      flower.style.top = `${y}px`;
+      
+      const randomSvg = svgs[Math.floor(Math.random() * svgs.length)];
+      const randomRotation = Math.floor(Math.random() * 60) - 30; // Da -30 a +30 gradi
+      
+      flower.innerHTML = randomSvg;
+      
+      // L'animazione base è gestita dal CSS, qui modifichiamo solo la rotazione custom
+      const innerSvg = flower.querySelector('svg');
+      if (innerSvg) innerSvg.style.transform = `rotate(${randomRotation}deg)`;
+      
+      garden.appendChild(flower);
+
+      // Rimuovi il fiore dal DOM dopo 8 secondi per evitare memory leak
+      setTimeout(() => {
+        flower.classList.add('wither');
+        setTimeout(() => flower.remove(), 400);
+      }, 8000);
+    });
+  }
+
+  // Gestione per la transizione ViewTransitions di Astro
+  document.addEventListener('astro:page-load', initInteractiveGarden);
+  initInteractiveGarden();
+</script>

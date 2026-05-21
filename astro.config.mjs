@@ -6,10 +6,13 @@ import tailwindVite from '@tailwindcss/vite';
 
 import icon from 'astro-icon';
 
+import sitemap from '@astrojs/sitemap';
+
 export default defineConfig({
+  site: 'https://www.roveratigiardini.com',
   output: 'static',
   adapter: netlify(),
-  integrations: [react(), keystatic(), icon()],
+  integrations: [react(), keystatic(), icon(), sitemap()],
   vite: {
     plugins: [tailwindVite()],
   }
