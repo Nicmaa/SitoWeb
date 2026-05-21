@@ -131,6 +131,7 @@ const tel1Href = 'tel:' + tel1.replace(/\s/g, '');
           <form
             id="contact-form"
             name="preventivo"
+            action="/"
             method="POST"
             data-netlify="true"
             netlify-honeypot="bot-field"
@@ -567,12 +568,9 @@ const tel1Href = 'tel:' + tel1.replace(/\s/g, '');
     errorMsg.classList.add('hidden');
 
     try {
-      // Netlify Forms accetta application/x-www-form-urlencoded o FormData
-      const formData = new FormData(form);
       const res = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
+        body: new FormData(form),
       });
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
