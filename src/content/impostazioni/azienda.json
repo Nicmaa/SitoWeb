@@ -1,7 +1,11 @@
 {
   "storiaIntro": [],
+  "fotoStoricaGrande": "../../assets/images/azienda/fotoStoricaGrande.png",
+  "fotoStoricaGrandeCaption": "Dogato (FE), anni '70",
   "fotoStoricaMedia1": "../../assets/images/azienda/fotoStoricaMedia1.webp",
   "fotoStoricaMedia1Caption": "una storia di passaggio e passione",
+  "fotoStoricaMedia2": "../../assets/images/azienda/fotoStoricaMedia2.png",
+  "fotoStoricaMedia2Caption": "Dogato (FE), anni '90",
   "timeline": [],
   "valori": [],
   "teamMembers": []
