@@ -2,6 +2,7 @@
 const currentYear = new Date().getFullYear();
 import { Image } from 'astro:assets';
 import isoLogo from '../assets/iso-9001-logo.png';
+import mainLogo from '../../public/logo-bianco.png';
 ---
 
 <footer class="relative bg-green-950 text-white overflow-hidden">
@@ -22,19 +23,13 @@ import isoLogo from '../assets/iso-9001-logo.png';
     <div class="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-white/10">
 
       <div class="md:col-span-5">
-        <a href="/" class="inline-flex items-center gap-3 mb-8 group" aria-label="Home - Roverati Giardini">
-          <div class="w-10 h-10 flex-shrink-0">
-            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full" aria-hidden="true">
-              <path d="M18 3C18 3 5 10 5 20C5 27.18 10.82 33 18 33C25.18 33 31 27.18 31 20C31 10 18 3 18 3Z" fill="#0C8E36" class="group-hover:opacity-80 transition-opacity duration-300"/>
-              <path d="M18 11 L18 30" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M18 19 Q14 15 10 17" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.9"/>
-              <path d="M18 24 Q22 20 26 21" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.9"/>
-            </svg>
-          </div>
-          <div class="flex flex-col leading-none">
-            <span class="text-xl font-bold tracking-[0.12em] uppercase text-white">Roverati</span>
-            <span class="text-[9px] tracking-[0.3em] uppercase text-green-400 font-medium mt-0.5">Giardini</span>
-          </div>
+        <a href="/" class="inline-flex items-center mb-5 group" aria-label="Home - Roverati Giardini">
+          <Image 
+            src={mainLogo} 
+            alt="Roverati Giardini Logo" 
+            class="h-17 w-auto object-contain group-hover:opacity-80 transition-opacity duration-300"
+            loading="lazy"
+          />
         </a>
 
         <p class="text-white/55 leading-relaxed mb-10 text-sm max-w-xs font-light">

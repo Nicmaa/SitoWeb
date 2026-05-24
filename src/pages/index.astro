@@ -20,6 +20,8 @@ const serviziEvidenza = tuttiServizi
   .slice(0, 3);
 
 const resolvedHeroImage = impostazioniHome?.data.heroImage;
+import logoImg from '../assets/icona.jpeg';
+import sfondoSvg from '../assets/sfondo.svg';
 ---
 
 <Layout 
@@ -76,12 +78,13 @@ const resolvedHeroImage = impostazioniHome?.data.heroImage;
               <textPath href="#textCircle">DAL 1974 · FERRARA · VERDE ·&nbsp;</textPath>
             </text>
           </svg>
-          <svg viewBox="0 0 36 36" width="32" height="32" fill="none" class="relative z-10">
-            <path d="M18 3C18 3 5 10 5 20C5 27.18 10.82 33 18 33C25.18 33 31 27.18 31 20C31 10 18 3 18 3Z" fill="#0C8E36"/>
-            <path d="M18 11 L18 30" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
-            <path d="M18 19 Q14 15 10 17" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
-            <path d="M18 24 Q22 20 26 21" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>
+          <Image 
+            src={logoImg} 
+            alt="Logo Roverati Giardini" 
+            class="relative z-10 w-12 h-12 rounded-full object-cover border"
+            width={50}
+            height={50}
+          />
         </div>
       </div>
 
@@ -337,13 +340,12 @@ const resolvedHeroImage = impostazioniHome?.data.heroImage;
 
   <section class="relative py-36 px-6 bg-cloud overflow-hidden">
     <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-      <svg viewBox="0 0 800 800" class="absolute w-[70vw] max-w-3xl opacity-[0.04]" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M400 50C400 50 60 200 60 430C60 620 215 760 400 760C585 760 740 620 740 430C740 200 400 50 400 50Z" fill="#0C8E36"/>
-        <path d="M400 120 L400 720" stroke="#0C8E36" stroke-width="6" stroke-linecap="round"/>
-        <path d="M400 380 Q290 280 180 320" stroke="#0C8E36" stroke-width="5" stroke-linecap="round"/>
-        <path d="M400 480 Q510 380 620 420" stroke="#0C8E36" stroke-width="5" stroke-linecap="round"/>
-        <path d="M400 280 Q480 200 560 230" stroke="#0C8E36" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
-      </svg>
+      <Image 
+        src={sfondoSvg} 
+        alt="" 
+        class="w-[1000px] md:w-[800px] max-w-none h-auto object-contain translate-y-24"
+        aria-hidden="true"
+      />
     </div>
     <div class="reveal relative max-w-3xl mx-auto text-center">
       <div class="inline-flex items-center gap-2.5 mb-8 px-5 py-2.5 rounded-full border border-green-200 bg-green-50">
