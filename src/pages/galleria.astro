@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import BeforeAfterSlider from '../components/BeforeAfterSlider.astro';
 import { getCollection, getEntry } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import sfondoSvg from '../assets/sfondo.svg';
 
 // ── Dati da Keystatic ─────────────────────────────────────────────────────
 const [
@@ -411,10 +412,13 @@ const aspectClass: Record<string, string> = {
 
   <!-- ═══════════════════ CTA ═══════════════════ -->
   <section class="py-28 px-6 bg-cloud relative overflow-hidden">
-    <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-      <svg viewBox="0 0 800 800" class="absolute w-[60vw] max-w-2xl opacity-[0.035]" fill="none">
-        <path d="M400 50C400 50 60 200 60 430C60 620 215 760 400 760C585 760 740 620 740 430C740 200 400 50 400 50Z" fill="#0C8E36"/>
-      </svg>
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <Image 
+        src={sfondoSvg} 
+        alt="" 
+        class="w-[700px] md:w-[800px] max-w-none h-auto object-contain translate-y-24"
+        aria-hidden="true"
+      />
     </div>
     <div class="reveal relative max-w-2xl mx-auto text-center">
       <h2 class="font-display text-5xl md:text-6xl text-green-900 mb-6 leading-[0.92]">
