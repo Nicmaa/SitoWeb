@@ -470,24 +470,34 @@ const aspectClass: Record<string, string> = {
 </style>
 
 <script>
-  // Funzione principale che inizializza la galleria
-  function initGallery() {
-    const filterBtns   = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  // Dichiara esplicitamente l'evento KeyboardEvent
+  const handleKeydown = (e: KeyboardEvent) => {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox || !lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') document.getElementById('lb-close')?.click();
+    if (e.key === 'ArrowLeft') document.getElementById('lb-prev')?.click();
+    if (e.key === 'ArrowRight') document.getElementById('lb-next')?.click();
+  };
+
+  document.addEventListener('astro:page-load', () => {
+    // Casting esplicito a NodeListOf<HTMLElement/HTMLButtonElement>
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
     const galleryItems = document.querySelectorAll<HTMLElement>('.gallery-item');
-    const loadMoreBtn  = document.getElementById('load-more-btn');
+    const loadMoreBtn = document.getElementById('load-more-btn') as HTMLButtonElement | null;
+    const lightbox = document.getElementById('lightbox') as HTMLElement | null;
 
-    if (!filterBtns.length && !galleryItems.length) return; // Failsafe se i nodi non sono presenti
+    if (!filterBtns.length && !galleryItems.length) return;
 
-    const ITEMS_PER_PAGE = 24;
     let currentPage = 1;
     let currentFilter = 'Tutti';
+    const ITEMS_PER_PAGE = 24;
 
     function renderGrid() {
       let visibleInFilter = 0;
       let totalShown = 0;
       const maxToShow = currentPage * ITEMS_PER_PAGE;
 
-      galleryItems.forEach((item) => {
+      galleryItems.forEach((item: HTMLElement) => {
         const match = currentFilter === 'Tutti' || item.dataset.cat === currentFilter;
 
         if (match) {
@@ -505,152 +515,133 @@ const aspectClass: Record<string, string> = {
       });
 
       if (loadMoreBtn && loadMoreBtn.parentElement) {
-        if (visibleInFilter > maxToShow) {
-          loadMoreBtn.parentElement.style.display = 'block';
-        } else {
-          loadMoreBtn.parentElement.style.display = 'none';
-        }
+        loadMoreBtn.parentElement.style.display = visibleInFilter > maxToShow ? 'block' : 'none';
       }
     }
 
-    // Rimuovi vecchi listener prima di riattaccarli (evita duplicazioni al cambio pagina SPA)
+    // ── Filtri ─────────────────────────────────────────────────────────────
     filterBtns.forEach(btn => {
-      const newBtn = btn.cloneNode(true) as HTMLButtonElement;
-      btn.parentNode?.replaceChild(newBtn, btn);
-      
-      newBtn.addEventListener('click', () => {
-        currentFilter = newBtn.dataset.filter!;
+      btn.addEventListener('click', (e: MouseEvent) => {
+        // Casting per dire a TS che il target è sicuramente un bottone in questo contesto
+        const target = e.currentTarget as HTMLButtonElement;
+        currentFilter = target.dataset.filter || 'Tutti';
         currentPage = 1; 
 
-        document.querySelectorAll<HTMLButtonElement>('.filter-btn').forEach(b => {
+        filterBtns.forEach(b => {
           b.classList.remove('bg-green-500', 'text-white', 'border-green-500');
           b.classList.add('bg-white/5', 'text-white/60', 'border-white/10');
           b.setAttribute('aria-pressed', 'false');
         });
-        newBtn.classList.add('bg-green-500', 'text-white', 'border-green-500');
-        newBtn.classList.remove('bg-white/5', 'text-white/60', 'border-white/10');
-        newBtn.setAttribute('aria-pressed', 'true');
+        target.classList.add('bg-green-500', 'text-white', 'border-green-500');
+        target.classList.remove('bg-white/5', 'text-white/60', 'border-white/10');
+        target.setAttribute('aria-pressed', 'true');
 
         renderGrid();
       });
     });
 
     if (loadMoreBtn) {
-      const newLoadMore = loadMoreBtn.cloneNode(true) as HTMLButtonElement;
-      loadMoreBtn.parentNode?.replaceChild(newLoadMore, loadMoreBtn);
-      newLoadMore.addEventListener('click', () => {
+      loadMoreBtn.addEventListener('click', () => {
         currentPage++;
         renderGrid();
       });
     }
 
-    // Esegui il render iniziale immediatamente
-    renderGrid();
-
     // ── Lightbox ─────────────────────────────────────────────────────────────
-    const lightbox  = document.getElementById('lightbox')!;
-    const lbImgWrap = document.getElementById('lb-img-wrap')!;
-    const lbPlaceholder = document.getElementById('lb-placeholder')!;
-    const lbLabel   = document.getElementById('lb-label')!;
-    const lbClose   = document.getElementById('lb-close')!;
-    const lbPrev    = document.getElementById('lb-prev')!;
-    const lbNext    = document.getElementById('lb-next')!;
+    if (lightbox) {
+      // Dichiarazione esplicita per i nodi del DOM
+      const lbImgWrap = document.getElementById('lb-img-wrap') as HTMLElement;
+      const lbPlaceholder = document.getElementById('lb-placeholder') as HTMLElement;
+      const lbLabel = document.getElementById('lb-label') as HTMLElement;
+      const lbClose = document.getElementById('lb-close') as HTMLButtonElement;
+      const lbPrev = document.getElementById('lb-prev') as HTMLButtonElement;
+      const lbNext = document.getElementById('lb-next') as HTMLButtonElement;
 
-    if (!lightbox) return;
+      // Type annotation per array e indici
+      let visibleItems: HTMLElement[] = [];
+      let currentIdx = 0;
 
-    let visibleItems: HTMLElement[] = [];
-    let currentIdx = 0;
+      const openLightbox = (idx: number) => {
+        visibleItems = Array.from(galleryItems).filter((i: HTMLElement) => 
+          currentFilter === 'Tutti' || i.dataset.cat === currentFilter
+        );
+        
+        currentIdx = visibleItems.indexOf(galleryItems[idx] as HTMLElement);
+        if (currentIdx === -1) currentIdx = 0;
+        
+        updateLightbox();
+        lightbox.classList.add('open');
+        lightbox.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      };
 
-    const openLightbox = (idx: number) => {
-      visibleItems = Array.from(galleryItems).filter(i => 
-        currentFilter === 'Tutti' || i.dataset.cat === currentFilter
-      );
+      const closeLightbox = () => {
+        lightbox.classList.remove('open');
+        lightbox.classList.add('hidden');
+        document.body.style.overflow = '';
+      };
+
+      const updateLightbox = () => {
+        const item = visibleItems[currentIdx];
+        if (!item) return;
+
+        const imgEl = item.querySelector('img') as HTMLImageElement | null;
+        const label = item.dataset.label || item.querySelector('p')?.textContent || '';
+
+        lbImgWrap.querySelectorAll('img').forEach(img => img.remove());
+
+        if (imgEl?.src) {
+          lbPlaceholder.classList.add('hidden');
+          const lb = document.createElement('img');
+          lb.src = imgEl.src;
+          lb.alt = label;
+          lb.className = 'w-full h-full object-contain';
+          lbImgWrap.appendChild(lb);
+        } else {
+          lbPlaceholder.classList.remove('hidden');
+        }
+
+        lbLabel.textContent = label;
+        lbPrev.style.display = visibleItems.length <= 1 ? 'none' : '';
+        lbNext.style.display = visibleItems.length <= 1 ? 'none' : '';
+      };
+
+      galleryItems.forEach((item, idx) => {
+        item.addEventListener('click', () => openLightbox(idx));
+      });
+
+      lbClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', (e: MouseEvent) => { 
+        if (e.target === lightbox) closeLightbox(); 
+      });
+
+      lbPrev.addEventListener('click', (e: MouseEvent) => {
+        e.stopPropagation(); 
+        currentIdx = (currentIdx - 1 + visibleItems.length) % visibleItems.length;
+        updateLightbox();
+      });
       
-      currentIdx = visibleItems.indexOf(galleryItems[idx]);
-      if (currentIdx === -1) currentIdx = 0;
-      
-      updateLightbox();
-      lightbox.classList.add('open');
-      lightbox.classList.remove('hidden'); // Specifica lo stato visibile esplicito
-      document.body.style.overflow = 'hidden';
-    };
-
-    const closeLightbox = () => {
-      lightbox.classList.remove('open');
-      lightbox.classList.add('hidden');
-      document.body.style.overflow = '';
-    };
-
-    const updateLightbox = () => {
-      const item = visibleItems[currentIdx];
-      if (!item) return;
-
-      const imgEl = item.querySelector<HTMLImageElement>('img');
-      const label = item.dataset.label ?? item.querySelector('p')?.textContent ?? '';
-
-      lbImgWrap.querySelectorAll('img').forEach(img => img.remove());
-
-      if (imgEl?.src) {
-        lbPlaceholder.classList.add('hidden');
-        const lb = document.createElement('img');
-        lb.src = imgEl.src;
-        lb.alt = label;
-        lb.className = 'w-full h-full object-contain';
-        lbImgWrap.appendChild(lb);
-      } else {
-        lbPlaceholder.classList.remove('hidden');
-      }
-
-      lbLabel.textContent = label;
-      lbPrev.style.display = visibleItems.length <= 1 ? 'none' : '';
-      boxNextStyle();
-    };
-
-    function boxNextStyle() {
-      lbNext.style.display = visibleItems.length <= 1 ? 'none' : '';
+      lbNext.addEventListener('click', (e: MouseEvent) => {
+        e.stopPropagation(); 
+        currentIdx = (currentIdx + 1) % visibleItems.length;
+        updateLightbox();
+      });
     }
 
-    galleryItems.forEach((item, idx) => {
-      // Clona per resettare listener pendenti delle pagine precedenti
-      const newItem = item.cloneNode(true) as HTMLElement;
-      item.parentNode?.replaceChild(newItem, item);
-      newItem.addEventListener('click', () => openLightbox(idx));
-    });
-
-    lbClose.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-
-    lbPrev.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIdx = (currentIdx - 1 + visibleItems.length) % visibleItems.length;
-      updateLightbox();
-    });
-    lbNext.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIdx = (currentIdx + 1) % visibleItems.length;
-      updateLightbox();
-    });
-
-    document.addEventListener('keydown', e => {
-      if (!lightbox.classList.contains('open')) return;
-      if (e.key === 'Escape')      closeLightbox();
-      if (e.key === 'ArrowLeft')   lbPrev.click();
-      if (e.key === 'ArrowRight')  lbNext.click();
-    });
-
     // ── Transformation tabs ───────────────────────────────────────────────────
-    const tabs   = document.querySelectorAll<HTMLButtonElement>('.trasf-tab');
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.trasf-tab');
     const panels = document.querySelectorAll<HTMLElement>('.trasf-panel');
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        const idx = parseInt(tab.dataset.tab!);
-
+        const idx = parseInt(tab.dataset.tab || '0', 10);
+        
         tabs.forEach(t => {
           t.classList.remove('bg-green-500', 'text-white', 'border-green-500');
           t.classList.add('bg-white', 'text-green-700', 'border-green-100');
           t.setAttribute('aria-selected', 'false');
         });
+        
         tab.classList.add('bg-green-500', 'text-white', 'border-green-500');
         tab.classList.remove('bg-white', 'text-green-700', 'border-green-100');
         tab.setAttribute('aria-selected', 'true');
@@ -659,7 +650,10 @@ const aspectClass: Record<string, string> = {
         panels[idx]?.classList.remove('hidden');
       });
     });
-  }
 
-  document.addEventListener('astro:page-load', initGallery);
+    renderGrid();
+  });
+
+  document.removeEventListener('keydown', handleKeydown);
+  document.addEventListener('keydown', handleKeydown);
 </script>
