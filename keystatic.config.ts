@@ -248,6 +248,10 @@ export default config({
           defaultValue: 'mdi:leaf',
           options: [
             { label: 'Foglia (Natura / Base)', value: 'mdi:leaf' },
+            { label: 'Ingranaggio', value: 'mdi:saw-blade' },
+            { label: 'Matita e righello', value: 'mdi:pencil-ruler' },
+            { label: 'Telefono emergenza', value: 'mdi:phone-alert' },
+            { label: 'Erba', value: 'mdi:grass' },
             { label: 'Tachimetro (Velocità / Efficienza)', value: 'mdi:speedometer' },
             { label: 'Città (Verde Pubblico)', value: 'mdi:city' },
             { label: 'Fuoco (Pirodiserbo)', value: 'mdi:fire' },
