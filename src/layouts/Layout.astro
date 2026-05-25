@@ -23,6 +23,8 @@ const { title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#0C8E36" />
 
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
@@ -76,3 +78,10 @@ const { title, description } = Astro.props;
     </script>
   </body>
 </html>
+
+<style is:global>
+  /* Previene il ricalcolo continuo dello scroll che genera il warning in console */
+  html, body {
+    overflow-anchor: none;
+  }
+</style>
