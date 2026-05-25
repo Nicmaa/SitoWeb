@@ -470,172 +470,196 @@ const aspectClass: Record<string, string> = {
 </style>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-  // ── Paginazione e Filtri ──────────────────────────────────────────────────
-  const filterBtns   = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
-  const galleryItems = document.querySelectorAll<HTMLElement>('.gallery-item');
-  const loadMoreBtn  = document.getElementById('load-more-btn');
+  // Funzione principale che inizializza la galleria
+  function initGallery() {
+    const filterBtns   = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const galleryItems = document.querySelectorAll<HTMLElement>('.gallery-item');
+    const loadMoreBtn  = document.getElementById('load-more-btn');
 
-  const ITEMS_PER_PAGE = 24;
-  let currentPage = 1;
-  let currentFilter = 'Tutti';
+    if (!filterBtns.length && !galleryItems.length) return; // Failsafe se i nodi non sono presenti
 
-  function renderGrid() {
-    let visibleInFilter = 0;
-    let totalShown = 0;
-    const maxToShow = currentPage * ITEMS_PER_PAGE;
+    const ITEMS_PER_PAGE = 24;
+    let currentPage = 1;
+    let currentFilter = 'Tutti';
 
-    galleryItems.forEach((item) => {
-      const match = currentFilter === 'Tutti' || item.dataset.cat === currentFilter;
+    function renderGrid() {
+      let visibleInFilter = 0;
+      let totalShown = 0;
+      const maxToShow = currentPage * ITEMS_PER_PAGE;
 
-      if (match) {
-        visibleInFilter++;
-        if (totalShown < maxToShow) {
-          item.classList.remove('hidden');
-          item.style.animationDelay = `${(totalShown % ITEMS_PER_PAGE) * 40}ms`;
-          totalShown++;
+      galleryItems.forEach((item) => {
+        const match = currentFilter === 'Tutti' || item.dataset.cat === currentFilter;
+
+        if (match) {
+          visibleInFilter++;
+          if (totalShown < maxToShow) {
+            item.classList.remove('hidden');
+            item.style.animationDelay = `${(totalShown % ITEMS_PER_PAGE) * 40}ms`;
+            totalShown++;
+          } else {
+            item.classList.add('hidden');
+          }
         } else {
           item.classList.add('hidden');
         }
-      } else {
-        item.classList.add('hidden');
-      }
-    });
+      });
 
-    if (loadMoreBtn && loadMoreBtn.parentElement) {
-      if (visibleInFilter > maxToShow) {
-        loadMoreBtn.parentElement.style.display = 'block';
-      } else {
-        loadMoreBtn.parentElement.style.display = 'none';
+      if (loadMoreBtn && loadMoreBtn.parentElement) {
+        if (visibleInFilter > maxToShow) {
+          loadMoreBtn.parentElement.style.display = 'block';
+        } else {
+          loadMoreBtn.parentElement.style.display = 'none';
+        }
       }
     }
-  }
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      currentFilter = btn.dataset.filter!;
-      currentPage = 1; 
+    // Rimuovi vecchi listener prima di riattaccarli (evita duplicazioni al cambio pagina SPA)
+    filterBtns.forEach(btn => {
+      const newBtn = btn.cloneNode(true) as HTMLButtonElement;
+      btn.parentNode?.replaceChild(newBtn, btn);
+      
+      newBtn.addEventListener('click', () => {
+        currentFilter = newBtn.dataset.filter!;
+        currentPage = 1; 
 
-      filterBtns.forEach(b => {
-        b.classList.remove('bg-green-500', 'text-white', 'border-green-500');
-        b.classList.add('bg-white/5', 'text-white/60', 'border-white/10');
-        b.setAttribute('aria-pressed', 'false');
+        document.querySelectorAll<HTMLButtonElement>('.filter-btn').forEach(b => {
+          b.classList.remove('bg-green-500', 'text-white', 'border-green-500');
+          b.classList.add('bg-white/5', 'text-white/60', 'border-white/10');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        newBtn.classList.add('bg-green-500', 'text-white', 'border-green-500');
+        newBtn.classList.remove('bg-white/5', 'text-white/60', 'border-white/10');
+        newBtn.setAttribute('aria-pressed', 'true');
+
+        renderGrid();
       });
-      btn.classList.add('bg-green-500', 'text-white', 'border-green-500');
-      btn.classList.remove('bg-white/5', 'text-white/60', 'border-white/10');
-      btn.setAttribute('aria-pressed', 'true');
-
-      renderGrid();
     });
-  });
 
-  if (loadMoreBtn) {
-    loadMoreBtn.addEventListener('click', () => {
-      currentPage++;
-      renderGrid();
-    });
-  }
-
-  renderGrid();
-  // ── Lightbox ─────────────────────────────────────────────────────────────
-  const lightbox  = document.getElementById('lightbox')!;
-  const lbImgWrap = document.getElementById('lb-img-wrap')!;
-  const lbPlaceholder = document.getElementById('lb-placeholder')!;
-  const lbLabel   = document.getElementById('lb-label')!;
-  const lbClose   = document.getElementById('lb-close')!;
-  const lbPrev    = document.getElementById('lb-prev')!;
-  const lbNext    = document.getElementById('lb-next')!;
-
-  let visibleItems: HTMLElement[] = [];
-  let currentIdx = 0;
-
-  const openLightbox = (idx: number) => {
-    visibleItems = Array.from(galleryItems).filter(i => 
-      currentFilter === 'Tutti' || i.dataset.cat === currentFilter
-    );
-    
-    currentIdx = visibleItems.indexOf(galleryItems[idx]);
-    if (currentIdx === -1) currentIdx = 0;
-    
-    updateLightbox();
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeLightbox = () => {
-    lightbox.classList.remove('open');
-    lightbox.classList.add('hidden');
-    document.body.style.overflow = '';
-  };
-
-  const updateLightbox = () => {
-    const item = visibleItems[currentIdx];
-    if (!item) return;
-
-    const imgEl = item.querySelector<HTMLImageElement>('img');
-    const label = item.dataset.label ?? item.querySelector('p')?.textContent ?? '';
-
-    lbImgWrap.querySelectorAll('img').forEach(img => img.remove());
-
-    if (imgEl?.src) {
-      lbPlaceholder.classList.add('hidden');
-      const lb = document.createElement('img');
-      lb.src = imgEl.src;
-      lb.alt = label;
-      lb.className = 'w-full h-full object-contain';
-      lbImgWrap.appendChild(lb);
-    } else {
-      lbPlaceholder.classList.remove('hidden');
+    if (loadMoreBtn) {
+      const newLoadMore = loadMoreBtn.cloneNode(true) as HTMLButtonElement;
+      loadMoreBtn.parentNode?.replaceChild(newLoadMore, loadMoreBtn);
+      newLoadMore.addEventListener('click', () => {
+        currentPage++;
+        renderGrid();
+      });
     }
 
-    lbLabel.textContent = label;
-    lbPrev.style.display = visibleItems.length <= 1 ? 'none' : '';
-    lbNext.style.display = visibleItems.length <= 1 ? 'none' : '';
-  };
+    // Esegui il render iniziale immediatamente
+    renderGrid();
 
-  galleryItems.forEach((item, idx) => {
-    item.addEventListener('click', () => openLightbox(idx));
-  });
+    // ── Lightbox ─────────────────────────────────────────────────────────────
+    const lightbox  = document.getElementById('lightbox')!;
+    const lbImgWrap = document.getElementById('lb-img-wrap')!;
+    const lbPlaceholder = document.getElementById('lb-placeholder')!;
+    const lbLabel   = document.getElementById('lb-label')!;
+    const lbClose   = document.getElementById('lb-close')!;
+    const lbPrev    = document.getElementById('lb-prev')!;
+    const lbNext    = document.getElementById('lb-next')!;
 
-  lbClose.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    if (!lightbox) return;
 
-  lbPrev.addEventListener('click', () => {
-    currentIdx = (currentIdx - 1 + visibleItems.length) % visibleItems.length;
-    updateLightbox();
-  });
-  lbNext.addEventListener('click', () => {
-    currentIdx = (currentIdx + 1) % visibleItems.length;
-    updateLightbox();
-  });
+    let visibleItems: HTMLElement[] = [];
+    let currentIdx = 0;
 
-  document.addEventListener('keydown', e => {
-    if (!lightbox.classList.contains('open')) return;
-    if (e.key === 'Escape')      closeLightbox();
-    if (e.key === 'ArrowLeft')   lbPrev.click();
-    if (e.key === 'ArrowRight')  lbNext.click();
-  });
+    const openLightbox = (idx: number) => {
+      visibleItems = Array.from(galleryItems).filter(i => 
+        currentFilter === 'Tutti' || i.dataset.cat === currentFilter
+      );
+      
+      currentIdx = visibleItems.indexOf(galleryItems[idx]);
+      if (currentIdx === -1) currentIdx = 0;
+      
+      updateLightbox();
+      lightbox.classList.add('open');
+      lightbox.classList.remove('hidden'); // Specifica lo stato visibile esplicito
+      document.body.style.overflow = 'hidden';
+    };
 
-  // ── Transformation tabs ───────────────────────────────────────────────────
-  const tabs   = document.querySelectorAll<HTMLButtonElement>('.trasf-tab');
-  const panels = document.querySelectorAll<HTMLElement>('.trasf-panel');
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      lightbox.classList.add('hidden');
+      document.body.style.overflow = '';
+    };
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const idx = parseInt(tab.dataset.tab!);
+    const updateLightbox = () => {
+      const item = visibleItems[currentIdx];
+      if (!item) return;
 
-      tabs.forEach(t => {
-        t.classList.remove('bg-green-500', 'text-white', 'border-green-500');
-        t.classList.add('bg-white', 'text-green-700', 'border-green-100');
-        t.setAttribute('aria-selected', 'false');
-      });
-      tab.classList.add('bg-green-500', 'text-white', 'border-green-500');
-      tab.classList.remove('bg-white', 'text-green-700', 'border-green-100');
-      tab.setAttribute('aria-selected', 'true');
+      const imgEl = item.querySelector<HTMLImageElement>('img');
+      const label = item.dataset.label ?? item.querySelector('p')?.textContent ?? '';
 
-      panels.forEach(p => p.classList.add('hidden'));
-      panels[idx]?.classList.remove('hidden');
+      lbImgWrap.querySelectorAll('img').forEach(img => img.remove());
+
+      if (imgEl?.src) {
+        lbPlaceholder.classList.add('hidden');
+        const lb = document.createElement('img');
+        lb.src = imgEl.src;
+        lb.alt = label;
+        lb.className = 'w-full h-full object-contain';
+        lbImgWrap.appendChild(lb);
+      } else {
+        lbPlaceholder.classList.remove('hidden');
+      }
+
+      lbLabel.textContent = label;
+      lbPrev.style.display = visibleItems.length <= 1 ? 'none' : '';
+      boxNextStyle();
+    };
+
+    function boxNextStyle() {
+      lbNext.style.display = visibleItems.length <= 1 ? 'none' : '';
+    }
+
+    galleryItems.forEach((item, idx) => {
+      // Clona per resettare listener pendenti delle pagine precedenti
+      const newItem = item.cloneNode(true) as HTMLElement;
+      item.parentNode?.replaceChild(newItem, item);
+      newItem.addEventListener('click', () => openLightbox(idx));
     });
-  });
-  });
+
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+    lbPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentIdx = (currentIdx - 1 + visibleItems.length) % visibleItems.length;
+      updateLightbox();
+    });
+    lbNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentIdx = (currentIdx + 1) % visibleItems.length;
+      updateLightbox();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape')      closeLightbox();
+      if (e.key === 'ArrowLeft')   lbPrev.click();
+      if (e.key === 'ArrowRight')  lbNext.click();
+    });
+
+    // ── Transformation tabs ───────────────────────────────────────────────────
+    const tabs   = document.querySelectorAll<HTMLButtonElement>('.trasf-tab');
+    const panels = document.querySelectorAll<HTMLElement>('.trasf-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const idx = parseInt(tab.dataset.tab!);
+
+        tabs.forEach(t => {
+          t.classList.remove('bg-green-500', 'text-white', 'border-green-500');
+          t.classList.add('bg-white', 'text-green-700', 'border-green-100');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('bg-green-500', 'text-white', 'border-green-500');
+        tab.classList.remove('bg-white', 'text-green-700', 'border-green-100');
+        tab.setAttribute('aria-selected', 'true');
+
+        panels.forEach(p => p.classList.add('hidden'));
+        panels[idx]?.classList.remove('hidden');
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initGallery);
 </script>
