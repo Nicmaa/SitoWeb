@@ -17,9 +17,10 @@ const storiaIntro = d?.storiaIntro?.length ? d.storiaIntro : [
 const timeline = d?.timeline?.length ? d.timeline : [
   { anno: '1964', titolo: 'Le origini: il frutteto',    testo: "L'azienda muove i primi passi. Viene avviata l'attività agricola basata sulla coltivazione diretta di un frutteto, ponendo le basi della nostra conoscenza botanica.", accento: true },
   { anno: '1996', titolo: 'Il giardinaggio professionale', testo: "Otteniamo ufficialmente la qualifica per il giardinaggio. La nostra vocazione agricola si evolve per abbracciare la progettazione e la manutenzione del verde a 360 gradi.", accento: true },
-  { anno: '2004', titolo: "L'Abbazia di Pomposa",       testo: "Inizia la collaborazione pluriennale per la cura del verde storico dell'Abbazia di Pomposa, uno dei progetti più delicati e prestigiosi della nostra storia.", accento: false },
-  { anno: '2010', titolo: 'Certificazione ISO 9001',   testo: "Otteniamo la certificazione ISO 9001:2015, formalizzando i processi e il controllo qualità su ogni intervento. Un impegno verso i clienti che manteniamo ancora oggi.", accento: false },
+  { anno: '2000', titolo: 'Primi appalti pubblici',       testo: "Espandiamo il nostro raggio d'azione vincendo le prime gare pubbliche. Iniziamo a prenderci cura del verde urbano e istituzionale, dimostrando affidabilità operativa su larga scala.", accento: false },
   { anno: '2018', titolo: 'Progettazione 3D',          testo: "Integriamo il servizio di progettazione digitale con render fotorealistici: i clienti vedono il loro giardino finito prima ancora che inizino i lavori.", accento: false },
+  { anno: '2020', titolo: 'Azienda leader della regione', testo: "Consolidiamo la nostra presenza sul territorio diventando un punto di riferimento per il settore paesaggistico regionale. Il team si struttura per gestire cantieri di crescente complessità.", accento: false },
+  { anno: '2025', titolo: 'Certificazione ISO 9001',   testo: "Otteniamo la certificazione ISO 9001:2015, formalizzando i processi e il controllo qualità su ogni intervento. Un impegno verso i clienti che manteniamo ancora oggi.", accento: false },
   { anno: 'Oggi', titolo: 'Oltre 1.200 progetti',       testo: "Tre generazioni, una squadra di professionisti e oltre 60 anni di storia legata alla terra. Continuiamo a crescere rimanendo fedeli ai nostri valori.", accento: true },
 ];
 
@@ -86,12 +87,15 @@ const iconeValori: Record<string, string> = {
 
             <!-- Foto grande sinistra -->
             <div class="col-span-7">
-              <div class="aspect-[3/4] rounded-3xl overflow-hidden relative group bg-green-900/20 border border-green-100">
+              <div class="aspect-[3/4] rounded-3xl overflow-hidden relative group bg-green-900/20 border border-green-100 lightbox-trigger cursor-pointer">
                 {imgFotoGrande ? (
                   <Image
                     src={imgFotoGrande}
                     alt={d?.fotoStoricaGrandeCaption ?? 'Foto storica Roverati Giardini'}
-                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+                    loading="eager" 
+                    fetchpriority="high" 
+                    decoding="sync"
                   />
                 ) : (
                   <div class="absolute inset-0 bg-gradient-to-br from-green-800/40 to-green-600/20"></div>
@@ -111,12 +115,15 @@ const iconeValori: Record<string, string> = {
 
             <!-- Colonna destra: 2 foto piccole -->
             <div class="col-span-5 flex flex-col gap-4">
-              <div class="aspect-square rounded-2xl overflow-hidden relative bg-green-900/15 border border-green-100">
+              <div class="aspect-square rounded-2xl overflow-hidden relative bg-green-900/15 border border-green-100 lightbox-trigger cursor-pointer">
                 {imgFotoMedia1 ? (
                   <Image
                     src={imgFotoMedia1}
                     alt={d?.fotoStoricaMedia1Caption ?? 'Foto storica'}
                     class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                    loading="eager" 
+                    fetchpriority="high" 
+                    decoding="sync"
                   />
                 ) : (
                   <div class="absolute inset-0 bg-gradient-to-br from-green-700/30 to-green-500/15"></div>
@@ -126,12 +133,15 @@ const iconeValori: Record<string, string> = {
                   {d?.fotoStoricaMedia1Caption ?? "Abbazia di Pomposa, 2004"}
                 </div>
               </div>
-              <div class="aspect-square rounded-2xl overflow-hidden relative bg-green-900/15 border border-green-100">
+              <div class="aspect-square rounded-2xl overflow-hidden relative bg-green-900/15 border border-green-100 lightbox-trigger cursor-pointer">
                 {imgFotoMedia2 ? (
                   <Image
                     src={imgFotoMedia2}
                     alt={d?.fotoStoricaMedia2Caption ?? 'Foto storica'}
                     class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                    loading="eager" 
+                    fetchpriority="high" 
+                    decoding="sync"
                   />
                 ) : (
                   <div class="absolute inset-0 bg-gradient-to-br from-green-600/30 to-green-400/15"></div>
@@ -334,7 +344,7 @@ const iconeValori: Record<string, string> = {
 
       <!-- Foto di squadra — full width -->
       <div class="reveal">
-        <div class="relative w-full aspect-[21/9] rounded-3xl overflow-hidden bg-green-900/30 border border-green-800/50">
+        <div class="relative w-full aspect-[21/9] rounded-3xl overflow-hidden bg-green-900/30 border border-green-800/50 lightbox-trigger cursor-pointer">
           {imgFotoSquadra ? (
             <Image
               src={imgFotoSquadra}
@@ -401,9 +411,46 @@ const iconeValori: Record<string, string> = {
       </div>
     </div>
   </section>
-
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-[999] bg-green-950/95 backdrop-blur-xl hidden items-center justify-center p-6"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Visualizzatore immagini"
+  >
+    <button id="lb-close" aria-label="Chiudi" class="absolute top-6 right-6 z-50 w-11 h-11 rounded-full border border-white/20 text-white/70 hover:text-white hover:border-white flex items-center justify-center transition-all duration-200">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+    <button id="lb-prev" aria-label="Immagine precedente" class="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full border border-white/20 text-white/70 hover:text-white hover:border-white flex items-center justify-center transition-all duration-200">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+      </svg>
+    </button>
+    <button id="lb-next" aria-label="Immagine successiva" class="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full border border-white/20 text-white/70 hover:text-white hover:border-white flex items-center justify-center transition-all duration-200">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
+    <div class="max-w-4xl w-full">
+      <div id="lb-img-wrap" class="w-full aspect-[4/3] rounded-2xl bg-green-900/50 overflow-hidden flex items-center justify-center">
+        <span id="lb-placeholder" class="text-white/30 text-sm">Immagine</span>
+      </div>
+      <p id="lb-label" class="text-center text-white/60 text-sm mt-4 font-light"></p>
+    </div>
+  </div>
 </Layout>
-
+<style>
+  #lightbox.open {
+    display: flex;
+    animation: lbFadeIn 0.25s ease both;
+  }
+  @keyframes lbFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+</style>
 <script>
   function initDynamicTimeline() {
     const container = document.getElementById('timeline-container');
@@ -415,32 +462,20 @@ const iconeValori: Record<string, string> = {
     const handleScroll = () => {
       const containerRect = container.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-      
-      // Il punto di attivazione è al 60% dello schermo (puoi aggiustarlo)
       const triggerPoint = windowHeight * 0.6;
-
-      // Calcoliamo quanto il "trigger point" è sceso all'interno del container
       let scrolled = triggerPoint - containerRect.top;
-      
-      // Trasformiamo in percentuale rispetto all'altezza totale del container
       let progress = (scrolled / containerRect.height) * 100;
 
-      // Blocchiamo il valore tra 0 e 100
       progress = Math.max(0, Math.min(100, progress));
-      
-      // Applichiamo l'altezza dinamica alla linea verde
       progressBar.style.height = `${progress}%`;
 
-      // Gestione dei nodi e dei testi
       items.forEach((item, index) => {
         const itemRect = item.getBoundingClientRect();
-        // Calcoliamo il centro esatto di ogni nodo
         const itemCenter = itemRect.top + (itemRect.height / 2);
 
         if (itemCenter < triggerPoint) {
           item.setAttribute('data-active', 'true');
         } else {
-          // Mantieni sempre acceso il primo fin dall'inizio
           if (index === 0 && progress <= 5) {
             item.setAttribute('data-active', 'true');
           } else {
@@ -452,11 +487,97 @@ const iconeValori: Record<string, string> = {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
-    
-    // Inizializzazione immediata per settare lo stato corretto al caricamento
     handleScroll();
   }
 
-  document.addEventListener('astro:page-load', initDynamicTimeline);
-  initDynamicTimeline();
+  function initLightbox() {
+    const triggers = document.querySelectorAll<HTMLElement>('.lightbox-trigger');
+    const lightbox = document.getElementById('lightbox');
+    
+    if (!lightbox || triggers.length === 0) return;
+
+    // Aggiunto "!" per garantire a TS che l'elemento non è null
+    const lbImgWrap = document.getElementById('lb-img-wrap')!;
+    const lbPlaceholder = document.getElementById('lb-placeholder')!;
+    const lbLabel = document.getElementById('lb-label')!;
+    const lbClose = document.getElementById('lb-close')!;
+    const lbPrev = document.getElementById('lb-prev')!;
+    const lbNext = document.getElementById('lb-next')!;
+
+    let currentIdx = 0;
+    const triggersArray = Array.from(triggers);
+
+    // Tipizzato idx come number
+    const openLightbox = (idx: number) => {
+      currentIdx = idx;
+      updateLightbox();
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      lightbox.classList.add('hidden');
+      document.body.style.overflow = '';
+    };
+
+    const updateLightbox = () => {
+      const item = triggersArray[currentIdx];
+      const imgEl = item.querySelector('img');
+      
+      let label = '';
+      if (imgEl && imgEl.alt) {
+        label = imgEl.alt;
+      } else {
+        const captionEl = item.querySelector('.text-white\\/70') || item.querySelector('.text-white\\/15');
+        if (captionEl) label = captionEl.textContent?.trim() || '';
+      }
+
+      lbImgWrap.querySelectorAll('img').forEach(img => img.remove());
+
+      if (imgEl && imgEl.src) {
+        lbPlaceholder.classList.add('hidden');
+        const lb = document.createElement('img');
+        lb.src = imgEl.src;
+        lb.alt = label;
+        lb.className = 'w-full h-full object-contain';
+        lbImgWrap.appendChild(lb);
+      } else {
+        lbPlaceholder.classList.remove('hidden');
+      }
+
+      lbLabel.textContent = label;
+    };
+
+    // Tipizzato idx come number
+    triggersArray.forEach((item, idx: number) => {
+      item.addEventListener('click', () => openLightbox(idx));
+    });
+
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+    lbPrev.addEventListener('click', () => {
+      currentIdx = (currentIdx - 1 + triggersArray.length) % triggersArray.length;
+      updateLightbox();
+    });
+    
+    lbNext.addEventListener('click', () => {
+      currentIdx = (currentIdx + 1) % triggersArray.length;
+      updateLightbox();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lbPrev.click();
+      if (e.key === 'ArrowRight') lbNext.click();
+    });
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    initDynamicTimeline();
+    initLightbox();
+  });
 </script>

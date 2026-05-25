@@ -470,6 +470,7 @@ const aspectClass: Record<string, string> = {
 </style>
 
 <script>
+  document.addEventListener('astro:page-load', () => {
   // ── Paginazione e Filtri ──────────────────────────────────────────────────
   const filterBtns   = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
   const galleryItems = document.querySelectorAll<HTMLElement>('.gallery-item');
@@ -635,5 +636,6 @@ const aspectClass: Record<string, string> = {
       panels.forEach(p => p.classList.add('hidden'));
       panels[idx]?.classList.remove('hidden');
     });
+  });
   });
 </script>

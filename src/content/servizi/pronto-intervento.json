@@ -1,0 +1,11 @@
+{
+  "titolo": "Pronto Intervento",
+  "descrizioneBreve": "Servizio di reperibilità e intervento rapido per emergenze verdi, come la rimozione e messa in sicurezza di alberi abbattuti o pericolanti a causa di maltempo, rami instabili e ripristino della viabilità in tempi minimi.",
+  "inEvidenza": false,
+  "icona": "mdi:phone-alert",
+  "tags": [
+    "pronto intervento, manutenzione"
+  ],
+  "immagine": "../../assets/images/servizi/pronto-intervento/immagine.webp",
+  "ordine": 100
+}

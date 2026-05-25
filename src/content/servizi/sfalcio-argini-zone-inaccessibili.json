@@ -1,0 +1,12 @@
+{
+  "titolo": "Sfalcio Erba in Argini e Zone Non Accessibili",
+  "descrizioneBreve": "Servizio specializzato di taglio erba e pulizia su terreni in forte pendenza, sponde e aree difficilmente raggiungibili. Impieghiamo attrezzature specifiche come decespugliatori forestali e trincia radiocomandate per garantire sicurezza ed efficienza in ogni condizione.",
+  "inEvidenza": false,
+  "icona": "mdi:grass",
+  "tags": [
+    "manutenzione",
+    "aree verdi complesse"
+  ],
+  "immagine": "../../assets/images/servizi/sfalcio-argini-zone-inaccessibili/immagine.webp",
+  "ordine": 190
+}
