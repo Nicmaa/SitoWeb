@@ -17,7 +17,7 @@ const [tutteTrasformazioni, tuttiServizi, impostazioniHome] = await Promise.all(
 const slideHome = tutteTrasformazioni[0];
 const serviziEvidenza = tuttiServizi
   .filter((s: CollectionEntry<'servizi'>) => s.data.inEvidenza)
-  .slice(0, 3);
+  .slice(0, 4);
 
 const resolvedHeroImage = impostazioniHome?.data.heroImage;
 import logoImg from '../assets/icona.jpeg';
@@ -118,6 +118,13 @@ import sfondoSvg from '../assets/sfondo.svg';
                class="inline-flex items-center gap-2 bg-white/8 border border-white/20 hover:bg-white/15 text-white/80 hover:text-white px-7 py-4 rounded-full font-medium text-sm transition-all duration-300 backdrop-blur-sm">
               Scopri i Servizi
             </a>
+            <a href="tel:+393882425127"
+              class="inline-flex items-center gap-2 bg-white/8 border border-white/20 hover:bg-white/15 text-white/80 hover:text-white px-7 py-4 rounded-full font-medium text-sm transition-all duration-300 backdrop-blur-sm">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+              </svg>
+              Chiama Ora
+            </a>
           </div>
         </div>
         <div class="flex gap-8 md:gap-12 border-t border-white/10 pt-8 md:border-0 md:pt-0">
@@ -162,67 +169,39 @@ import sfondoSvg from '../assets/sfondo.svg';
           </svg>
         </a>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-        
-        {serviziEvidenza[0] && (
-          <a href={`/servizi/${serviziEvidenza[0].id}`}
-             class="reveal service-card group md:col-span-5 relative bg-green-800 rounded-3xl overflow-hidden p-10 min-h-[340px] flex flex-col justify-between hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-900/30 transition-all duration-500">
-            <div class="absolute -bottom-20 -right-20 w-64 h-64 rounded-full bg-green-500/20 blur-3xl pointer-events-none"></div>
-            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-400/0 via-green-400 to-green-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <span class="absolute top-8 right-8 font-display text-[6rem] font-light text-white/[0.06] leading-none select-none">01</span>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {serviziEvidenza.map((servizio: CollectionEntry<'servizi'>) => (
+          <a href={`/servizi/${servizio.id}`}
+            class="reveal service-card group relative bg-white rounded-3xl overflow-hidden border border-green-100 p-8 lg:p-10 flex flex-col sm:flex-row gap-6 sm:gap-8 items-start sm:items-center hover:-translate-y-1 hover:border-green-300 hover:shadow-xl hover:shadow-green-900/8 transition-all duration-500">
             
-            <div class="relative z-10">
-              <div class="w-14 h-14 rounded-2xl bg-green-500/20 border border-green-400/20 group-hover:bg-green-500 text-green-300 group-hover:text-white flex items-center justify-center mb-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-green-500/30">
-                <Icon name={serviziEvidenza[0].data.icona || 'mdi:leaf'} class="w-7 h-7" aria-hidden="true" />
-              </div>
-              <h3 class="text-2xl font-semibold text-white mb-3">{serviziEvidenza[0].data.titolo}</h3>
-              <p class="text-sm text-white/50 leading-relaxed max-w-xs font-light">{serviziEvidenza[0].data.descrizioneBreve}</p>
+            <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-green-500 to-green-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+            
+            <div class="w-16 h-16 rounded-2xl bg-green-50 border border-green-200 text-green-600 group-hover:bg-green-500 group-hover:text-white group-hover:border-green-500 flex items-center justify-center flex-shrink-0 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-green-500/30 transition-all duration-300">
+              <Icon name={servizio.data.icona || 'mdi:leaf'} class="w-8 h-8" aria-hidden="true" />
             </div>
-            <div class="relative z-10 flex items-center justify-between mt-10">
-              <span class="text-xs font-bold text-green-400 tracking-widest uppercase">Scopri</span>
-              <div class="w-9 h-9 rounded-full border border-green-500/40 group-hover:bg-green-500 group-hover:border-green-500 flex items-center justify-center transition-all duration-300">
-                <svg class="w-4 h-4 text-green-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                </svg>
+            
+            <div class="flex-1 min-w-0 w-full">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="text-xl font-semibold text-green-900 mb-1.5">{servizio.data.titolo}</h3>
+                  <p class="text-sm text-green-700/60 leading-relaxed font-light">{servizio.data.descrizioneBreve}</p>
+                </div>
+                <div class="w-9 h-9 rounded-full border border-green-100 group-hover:bg-green-500 group-hover:border-green-500 flex items-center justify-center transition-all duration-300 flex-shrink-0 hidden sm:flex">
+                  <svg class="w-4 h-4 text-green-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </div>
               </div>
+              {servizio.data.tags && servizio.data.tags.length > 0 && (
+                <div class="mt-4 flex flex-wrap gap-2">
+                  {servizio.data.tags.map((tag: string) => (
+                    <span class="text-[10px] bg-green-50 text-green-600 font-bold tracking-wide uppercase px-3 py-1 rounded-full border border-green-100">{tag}</span>
+                  ))}
+                </div>
+              )}
             </div>
           </a>
-        )}
-
-        <div class="md:col-span-7 flex flex-col gap-5">
-          {serviziEvidenza.slice(1, 3).map((servizio: CollectionEntry<'servizi'>) => (
-            <a href={`/servizi/${servizio.id}`}
-               class="reveal service-card group relative bg-white rounded-3xl overflow-hidden border border-green-100 p-10 flex gap-8 items-center hover:-translate-y-1 hover:border-green-300 hover:shadow-xl hover:shadow-green-900/8 transition-all duration-500">
-              <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-green-500 to-green-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-              
-              <div class="w-16 h-16 rounded-2xl bg-green-50 border border-green-200 text-green-600 group-hover:bg-green-500 group-hover:text-white group-hover:border-green-500 flex items-center justify-center flex-shrink-0 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-green-500/30 transition-all duration-300">
-                <Icon name={servizio.data.icona || 'mdi:leaf'} class="w-8 h-8" aria-hidden="true" />
-              </div>
-              
-              <div class="flex-1 min-w-0">
-                <div class="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 class="text-xl font-semibold text-green-900 mb-1.5">{servizio.data.titolo}</h3>
-                    <p class="text-sm text-green-700/60 leading-relaxed font-light">{servizio.data.descrizioneBreve}</p>
-                  </div>
-                  <div class="w-9 h-9 rounded-full border border-green-100 group-hover:bg-green-500 group-hover:border-green-500 flex items-center justify-center transition-all duration-300 flex-shrink-0">
-                    <svg class="w-4 h-4 text-green-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                    </svg>
-                  </div>
-                </div>
-                {servizio.data.tags && servizio.data.tags.length > 0 && (
-                  <div class="mt-4 flex gap-2">
-                    {servizio.data.tags.map((tag: string) => (
-                      <span class="text-[10px] bg-green-50 text-green-600 font-bold tracking-wide uppercase px-3 py-1 rounded-full border border-green-100">{tag}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </a>
-          ))}
-        </div>
+        ))}
       </div>
     </div>
   </section>

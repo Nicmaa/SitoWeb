@@ -1,0 +1,11 @@
+{
+  "titolo": "Progettazione 3D",
+  "descrizioneBreve": "Ideazione e sviluppo di giardini, terrazzi e spazi verdi tramite rendering 3D. Integriamo soluzioni NBL (Nature-Based Solutions) per creare ecosistemi sostenibili, permettendoti di visualizzare in anteprima il risultato architettonico e botanico con precisione tecnica.",
+  "inEvidenza": false,
+  "icona": "mdi:pencil-ruler",
+  "tags": [
+    "progettazione e consulenza"
+  ],
+  "immagine": "../../assets/images/servizi/progettazione-3d/immagine.webp",
+  "ordine": 75
+}

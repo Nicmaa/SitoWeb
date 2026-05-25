@@ -1,0 +1,11 @@
+{
+  "titolo": "Fresatura e Rimozione Radici",
+  "descrizioneBreve": "Intervento meccanico per l'eliminazione definitiva di ceppi e radici superficiali post-abbattimento. Utilizziamo fresaceppi professionali per triturare il legno in profondità, lasciando il terreno livellato e pronto per nuove sistemazioni o piantumazioni.",
+  "inEvidenza": false,
+  "icona": "mdi:saw-blade",
+  "tags": [
+    "manutenzione, abbattimento e rimozione"
+  ],
+  "immagine": "../../assets/images/servizi/fresatura-rimozione-radici/immagine.webp",
+  "ordine": 200
+}
