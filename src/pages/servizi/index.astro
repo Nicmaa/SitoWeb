@@ -15,10 +15,6 @@ const serviziOrdinati = tuttiServizi.sort(
   (a, b) => (a.data.ordine ?? 999) - (b.data.ordine ?? 999)
 );
 
-// ── Recupero impostazioni pagina Servizi (Hero) ──────────────────────────────
-const impostazioniServizi = await getEntry('impostazioni', 'servizi');
-const serviziHero = impostazioniServizi?.data?.heroImage;
-
 const serviziConImmagini = serviziOrdinati.map((s) => ({
   ...s,
   img: s.data.immagine,
